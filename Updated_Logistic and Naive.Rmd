@@ -1,0 +1,278 @@
+---
+title: "Classification"
+author: "Bishal Neupane"
+date: "9/17/2022"
+output: pdf_document
+---
+
+
+### Source: 
+ https://www.kaggle.com/code/abhpasha/logistic-regression-predicting-rain-in-australia
+
+### Importing data
+```{r}
+df <- read.csv("weatherAUS.csv", header = TRUE)
+
+```
+```{r}
+head(df)
+```
+#There are alot of column so removing columns with non numeric values.
+```{r}
+df$Date<- NULL
+df$WindGustDir<-NULL
+df$WindGustDir <-NULL
+df$WindDir3pm <- NULL
+df$WindDir3pm <-NULL
+df$Location <-NULL
+df$Sunshine <-NULL
+df$RainToday <- NULL
+df$WindDir9am <-NULL
+df$Evaporation <-NULL 
+```
+
+### Structure of Data Frame
+
+```{r}
+str(df)
+```
+
+## Data Exploration
+
+### Names of Column
+```{r}
+names(df)
+
+```
+### Importing Package and  using it to Change to factor
+```{r}
+#install.packages("dplyr")
+library(dplyr)
+df <- mutate_if(df, is.character, as.factor)
+
+```
+
+### Dimensions of df
+```{r}
+dim(df)
+```
+
+
+```{r}
+str(df)
+```
+
+
+### Statistics Summary of Each column
+```{r}
+summary(df)
+```
+
+### Exploring Missing values
+```{r}
+sum(is.na(df))
+```
+### Removing the row with target value NA
+```{r}
+df <- subset(df,RainTomorrow  != "NA")
+
+```
+
+
+
+
+
+### Dimension after removing rows with NA as Rain Tomorrow
+```{r}
+dim(df)
+```
+
+
+
+```{r}
+str(df)
+```
+
+
+
+### Replacing NA's with mean of a column
+
+```{r}
+
+#install.packages('tidyr')
+for(i in 1:ncol(df)){
+  df[is.na(df[,i]), i] <- mean(df[,i], na.rm = TRUE)
+}
+```
+
+### Summary after replacing NA's with mean
+```{r}
+summary(df)
+```
+
+
+
+
+
+
+
+
+
+## Data Visualization
+```{r}
+par(mfrow=c(1,6))
+plot(df$RainTomorrow, df$MinTemp, data=df, main="MinTemp",
+varwidth=TRUE)
+plot(df$RainTomorrow, df$MaxTemp, data=df, main="MaxTemp", varwidth=TRUE)
+plot(df$RainTomorrow, df$Rainfall, data=df, main="Rainfall", varwidth=TRUE)
+plot(df$RainTomorrow, df$Evaporation, data=df, main="Evaporation", varwidth=TRUE)
+plot(df$RainTomorrow, df$Sunshine, data=df, main="Sunshine", varwidth=TRUE)
+
+plot(df$RainTomorrow, df$WindGustSpeed, data=df, main="windGustSpeed",
+varwidth=TRUE)
+
+
+```
+```{r}
+boxplot(df, col = rainbow(ncol(df)))
+```
+
+## Model Building (Logistic Regression)
+### Building Model and getting summary for all of the 15 predictors
+
+```{r}
+set.seed(1234)
+i <- sample(1:nrow(df), 0.80*nrow(df), replace=FALSE)
+train <-df[i,]
+test <- df[-i,]
+glm1 <- glm(RainTomorrow~., data=train, family=binomial)
+summary(glm1)
+
+```
+## Prediction and result summary
+### Predicting Test Set and plotting ROC 
+```{r}
+#install.packages("ROCR")
+library(ROCR)
+p <- predict(glm1, newdata=test, type="response")
+pr <- prediction(p, test$RainTomorrow)
+# TPR = sensitivity, FPR=specificity
+prf <- performance(pr, measure = "tpr", x.measure = "fpr")
+plot(prf)
+# compute AUC
+auc <- performance(pr, measure = "auc")
+auc <- auc@y.values[[1]]
+print(auc)
+
+```
+
+
+
+### Explaination of Summary
+we are using glm() generalized linear function.For the logistic regression, the residuals are deviancce residuals.The deviance residual is a mathematical transformation of loss function.The null deviance measures the lack of fit of the model with only intercept while residual deviance measures lack of fit of the entire model. In our case residual deviance is lower than the Null deviance. The Fisher scoring algorithm is a modified form of Newton's method of solving a maximum likelihood problem. In logistic regression, the coefficient quantifies the difference in the log odds of the target variable rather than measuring difference in target variable. ROC curves goes up from 0 to 1 which means that the model is performing pretty well. AUC value is also 0.86
+
+### Dimension of Test Case
+```{r}
+dim(test)
+```
+
+### Predicting on Test data and print accuracy
+```{r}
+probs <- predict(glm1, newdata=test, type="response")
+
+pred <- ifelse(probs>0.5, 2, 1)
+acc1 <- mean(pred==as.integer(test$RainTomorrow))
+print(paste("glm1 accuracy = ", acc1))
+
+
+```
+### Accuracy Explaination:
+The accuracy of the model is about 84 percent.
+
+## Model Building (Naive Bayes)
+### Installing package and using it to train
+```{r}
+#install.packages("e1071")
+library(e1071)
+nb1 <- naiveBayes(RainTomorrow~., data=train)
+nb1
+```
+### Explaination of Result:
+The prior and likelihood is calculated from the training set.The prior is shown in the form of A-priori which is 0.77 and 0.22 in our case. Likelihood is shown as the conditional probability. Each row sums upto one and each shows the likelihood of occuring each events. 
+
+```{r}
+p2_raw <- predict(nb1, newdata=test, type="raw")
+head(p2_raw, n=2)
+
+```
+### Explaination on test
+The prediction of test for two rows of test data set is shown above which is 99 percent and 95 percent no.
+
+
+### Comparison of Models:
+The result of both models seems to be pretty similar. The ROC of logistic regression shows that the model is pretty good. The accuracy was also almost similar.I have used all of the 15 features for both logistic regression and naive bayes.
+
+
+
+### Strength of Logistic Regressions:
+ 1) Logistic regression is easier to implement, interpret and very  efficient to train
+ 2) It can easily extend to multiple classes.
+ 3) It provides a measure of how appropriate is a predictor.
+
+### Weakness of Logistic Regression:
+ 1) If number of rows is less than the number of attributes then it will lead to over fitting.
+ 2) It can only be used to predict descrete function
+ 3) Non linear problems cannot be solved with logistic regression.
+
+
+### Strength of Naive Bayes Classifier:
+ 1) It is simple to implement. 
+ 2) It is very fast because probabilities can be directly calculated without loops.
+ 3) It works well with both continuous and discrete data.
+
+
+### Weakness of Naive Bayes Classifier:
+ 1) This algorithm assumes that all features are independent which rarely happens in real life.
+ 2) It would create problem when the categorical variable is only seen in test dataset. It will assign the zero probability which can create problem to the result.
+
+
+
+### Explaination of benefits and drawbacks of each Classification metrics used:
+
+### 1) Accuracy:
+Accuracy is the ratio of correctly classified to the total number of rows. 
+
+#### Advantages of Accuracy 
+  1) Easy to use, understand and relate.
+  2) Give the proper effectiveness of model if data is balanced.
+  
+#### Drawbacks of Accuracy
+  1) Not as interreptable as confusion matrix
+  2) It doesn't take wrong prediction into consideration
+  
+### 2) Confusion Matrix:
+
+#### Advantages of Confusion Matrix:
+  1) It specifies for which label model is confused.
+  2) It shows the correct and incorrect prediction.
+
+#### Disadvantages:
+  1) Checking for over and under fitting is difficult.
+  2) It doesn't give a class probabilities.
+
+
+### 3) ROC curves and AUC:
+
+
+#### Advantages:
+  1) It shows the graphical representation of accuracy of test 
+  2) It allows more complex and more exact measure of accuracy.
+
+#### Disadvantages:
+  1) Actual decision threshold is not displayed.
+  2) It is not easily interreptable from business prospective.
+  
+### 5) MCC:
+#### Advantages:
+1) It accounts for difference in class distribution.
+
