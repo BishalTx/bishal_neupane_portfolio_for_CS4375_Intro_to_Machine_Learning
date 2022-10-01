@@ -16,4 +16,4 @@ Logistic Regression from Scratch's Documentation can be found here. [Logistic Re
 NaiveBaye's from Scratch:
 Code for naiveBaye's from scratch can be found here [Naive Baye's code in c++](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Naive%20Baye's%20from%20Scratch.cpp)
 
-Documentation for Naive Bayes can be found here [Naive Baye's Documentation](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/2804005d09cdd0c63e8d519561d6ce1ac6eae566/Na%C3%AFve%20Baye%20from%20scratch%20c%2B%2B.pdf)
+Documentation for Naive Bayes can be found here [Naive Baye's Documentation](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Upated%20Na%C3%AFve%20Baye%20from%20scratch%20c%2B%2B.pdf)
