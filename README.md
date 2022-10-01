@@ -11,7 +11,7 @@ Linear Regression pdf can be found here [Linear Regression](https://github.com/B
 Logistic Regression and Naive Bayes pdf can be found here. [Logistic Regression and Naive Bayes](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Updated_Logistic-and-Naive.pdf)
 Code for Logistic Regression and Naive Bayes can be found here. [code here](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/commit/0ac9a9a1803a85e03c89b406db7aef8990217189) 
 
-Logistic Regression from Scratch's Documentation can be found here. [Logistic Regression from Scratch Documentation](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/commit/ef4006ad3c272716b281a9b869628d9503c83675) 
+Logistic Regression from Scratch's Documentation can be found here. [Logistic Regression from Scratch Documentation](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/AssignmentMLLogistic.pdf) 
 
 NaiveBaye's from Scratch:
 Code for naiveBaye's from scratch can be found here [Naive Baye's code in c++](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Naive%20Baye's%20from%20Scratch.cpp)
