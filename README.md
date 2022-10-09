@@ -19,6 +19,6 @@ Code for naiveBaye's from scratch can be found here [Naive Baye's code in c++](h
 Documentation for Naive Bayes can be found here [Naive Baye's Documentation](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Upated%20Na%C3%AFve%20Baye%20from%20scratch%20c%2B%2B.pdf)
 
 ## Searching For Similarity
-Classification using Logistic Regression, KNN and Decision tree can be found here (https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Updated-Classification-using-Logistic-Regression%2C-KNN-and-Decision-Tree.pdf)
+Classification using Logistic Regression, KNN and Decision tree can be found [here](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Updated-Classification-using-Logistic-Regression%2C-KNN-and-Decision-Tree.pdf)
 
-Code for Classification using Logistic Regression, KNN and Decision tree can be found here(https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Updated%20Classification%20using%20Logistic%20Regression%2C%20KNN%20and%20Decision%20Tree.Rmd)
+Code for Classification using Logistic Regression, KNN and Decision tree can be found [here](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Updated%20Classification%20using%20Logistic%20Regression%2C%20KNN%20and%20Decision%20Tree.Rmd)
