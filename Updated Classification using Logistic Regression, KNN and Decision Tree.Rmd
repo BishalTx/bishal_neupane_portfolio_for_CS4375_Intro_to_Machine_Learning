@@ -1,0 +1,332 @@
+---
+title: "Classification using Logistic Regression, KNN, Decision Tree"
+author: "Bishal Neupane, Saugat Gyawali, Spencer Gray, Michael Stinnett"
+date: "10/08/2022"
+output: pdf_document
+---
+
+
+### Source: 
+ https://www.kaggle.com/code/abhpasha/logistic-regression-predicting-rain-in-australia
+
+### Importing data
+```{r}
+df <- read.csv("weatherAUS.csv", header = TRUE)
+
+```
+```{r}
+head(df)
+```
+#There are alot of column so removing columns with non numeric values.
+```{r}
+df$Date<- NULL
+df$WindGustDir<-NULL
+df$WindGustDir <-NULL
+df$WindDir3pm <- NULL
+df$WindDir3pm <-NULL
+df$Location <-NULL
+df$Sunshine <-NULL
+df$RainToday <- NULL
+df$WindDir9am <-NULL
+df$Evaporation <-NULL 
+```
+
+### Structure of Data Frame
+
+```{r}
+str(df)
+```
+
+## Data Exploration
+
+### Names of Column
+```{r}
+names(df)
+
+```
+### Importing Package and  using it to Change to factor
+```{r}
+#install.packages("dplyr")
+library(dplyr)
+df <- mutate_if(df, is.character, as.factor)
+
+```
+
+### Dimensions of df
+```{r}
+dim(df)
+```
+
+
+```{r}
+str(df)
+```
+
+
+### Statistics Summary of Each column
+```{r}
+summary(df)
+```
+
+### Exploring Missing values
+```{r}
+sum(is.na(df))
+```
+### Removing the row with target value NA
+```{r}
+df <- subset(df,RainTomorrow  != "NA")
+
+```
+
+
+
+
+
+### Dimension after removing rows with NA as Rain Tomorrow
+```{r}
+dim(df)
+```
+
+
+
+```{r}
+str(df)
+```
+
+
+
+### Replacing NA's with mean of a column
+
+```{r}
+
+#install.packages('tidyr')
+for(i in 1:ncol(df)){
+  df[is.na(df[,i]), i] <- mean(df[,i], na.rm = TRUE)
+}
+```
+
+### Summary after replacing NA's with mean
+```{r}
+summary(df)
+```
+
+
+
+
+
+
+
+
+
+## Data Visualization
+```{r}
+par(mfrow=c(1,6))
+plot(df$RainTomorrow, df$MinTemp, data=df, main="MinTemp",
+varwidth=TRUE)
+plot(df$RainTomorrow, df$MaxTemp, data=df, main="MaxTemp", varwidth=TRUE)
+plot(df$RainTomorrow, df$Rainfall, data=df, main="Rainfall", varwidth=TRUE)
+plot(df$RainTomorrow, df$Evaporation, data=df, main="Evaporation", varwidth=TRUE)
+plot(df$RainTomorrow, df$Sunshine, data=df, main="Sunshine", varwidth=TRUE)
+
+plot(df$RainTomorrow, df$WindGustSpeed, data=df, main="windGustSpeed",
+varwidth=TRUE)
+
+
+```
+```{r}
+boxplot(df, col = rainbow(ncol(df)))
+```
+```{r}
+par(mfrow=c(3,5))
+cdplot(df$RainTomorrow~df$Humidity3pm)
+cdplot(df$RainTomorrow~df$WindSpeed3pm)
+cdplot(df$RainTomorrow~df$MinTemp)
+cdplot(df$RainTomorrow~df$MaxTemp)
+cdplot(df$RainTomorrow~df$Rainfall)
+cdplot(df$RainTomorrow~df$WindGustSpeed)
+cdplot(df$RainTomorrow~df$WindSpeed9am)
+cdplot(df$RainTomorrow~df$Humidity9am)
+cdplot(df$RainTomorrow~df$Pressure9am)
+cdplot(df$RainTomorrow~df$Temp3pm)
+cdplot(df$RainTomorrow~df$Temp9am)
+cdplot(df$RainTomorrow~df$Cloud3pm)
+cdplot(df$RainTomorrow~df$Cloud9am)
+
+
+```
+
+## Model Building (Logistic Regression)
+### Building Model and getting summary for all of the 15 predictors
+
+```{r}
+set.seed(1234)
+i <- sample(1:nrow(df), 0.80*nrow(df), replace=FALSE)
+train <-df[i,]
+test <- df[-i,]
+glm1 <- glm(RainTomorrow~., data=train, family=binomial)
+summary(glm1)
+
+```
+## Prediction and result summary
+### Predicting Test Set and plotting ROC 
+```{r}
+#install.packages("ROCR")
+library(ROCR)
+p <- predict(glm1, newdata=test, type="response")
+pr <- prediction(p, test$RainTomorrow)
+# TPR = sensitivity, FPR=specificity
+prf <- performance(pr, measure = "tpr", x.measure = "fpr")
+plot(prf)
+# compute AUC
+auc <- performance(pr, measure = "auc")
+auc <- auc@y.values[[1]]
+print(auc)
+
+```
+
+
+
+
+
+### Dimension of Test Case
+```{r}
+dim(test)
+```
+
+### Predicting on Test data and print accuracy
+```{r}
+probs <- predict(glm1, newdata=test, type="response")
+
+pred <- ifelse(probs>0.5, 2, 1)
+acc1 <- mean(pred==as.integer(test$RainTomorrow))
+print(paste("glm1 accuracy = ", acc1))
+table(pred,as.integer(test$RainTomorrow))
+
+
+```
+### Accuracy Explaination:
+The accuracy of the model is about 84 percent.
+
+
+```{r}
+str(test)
+levels(test$RainTomorrow) <- list("1" = "No", "2" = "Yes")
+str(test)
+```
+
+
+```{r}
+library(caret)
+confusionMatrix(as.factor(pred),as.factor(test$RainTomorrow))
+```
+### KNN
+```{r}
+trainForKNN <- train
+trainForKNN$RainTomorrow <- NULL
+head(trainForKNN)
+```
+```{r}
+trainForKNNLabels <- train$RainTomorrow
+testForKNN <- test
+testForKNN$RainTomorrow <- NULL
+testLabelForKNN <- test$RainTomorrow
+head(testForKNN)
+```
+```{r}
+library(class)
+knnPred <- knn(train = trainForKNN, test = testForKNN, cl=trainForKNNLabels, k=3)
+```
+
+```{r}
+levels(knnPred) <- list("1" = "No", "2" = "Yes")
+str(knnPred)
+```
+
+
+```{r}
+acc <- length(which(knnPred == testLabelForKNN)) /length(knnPred)
+print(acc)
+
+```
+```{r}
+library(caret)
+confusionMatrix(as.factor(knnPred),as.factor(test$RainTomorrow))
+```
+```{r}
+#install.packages("tree")
+library(tree)
+trainForDT <- trainForKNN
+head(trainForDT)
+trainLabelsForDT <- trainForKNNLabels
+testForDt <- testForKNN
+
+```
+
+```{r}
+head(trainLabelsForDT)
+
+
+```
+
+```{r}
+treeWeather <- tree(trainLabelsForDT~., data=trainForDT)
+treeWeather
+
+```
+```{r}
+plot(treeWeather)
+text(treeWeather, cex=0.75, pretty=0)
+```
+```{r}
+summary(treeWeather)
+```
+```{r}
+prediction <- predict(treeWeather, newdata = testForDt, type = "class")
+table(prediction, test$RainTomorrow)
+```
+
+```{r}
+levels(prediction) <- list("1" = "No", "2" = "Yes")
+library(caret)
+confusionMatrix(as.factor(prediction),as.factor(test$RainTomorrow))
+```
+### Repeating Experiment with rpart
+```{r}
+#install.packages("rpart")
+library(rpart)
+treeR <- rpart(trainLabelsForDT~., data =trainForDT, method ="class" )
+treeR
+```
+
+```{r}
+plot(treeR, uniform=TRUE, margin =0.2)
+text(treeR)
+```
+```{r}
+summary(treeR)
+```
+```{r}
+prediction1 <- predict(treeR, newdata = testForDt, type = "class")
+table(prediction, test$RainTomorrow)
+```
+```{r}
+levels(prediction1) <- list("1" = "No", "2" = "Yes")
+library(caret)
+confusionMatrix(as.factor(prediction1),as.factor(test$RainTomorrow))
+```
+### Working of Algorithms:
+#### Logistic Regression:
+It is the statistical analysis method which predicts the output based on the prior observation of a data set. Logistic regression focuses on decreasing the loss function on each iteration using the concept of gradient descent and learning rate. It will adjust the value of w. It tries to minimize the loss as long as it can for the given data and output the log odd and this can be later converted to probability.
+
+#### KNN Classification:
+ KNN is the machine learning algorithm which can be used for both regression and classification but I am going to focus on classification. It tries to classify different categories based on the distance. It tries to create the group of K data based on the euclidian distance or other distances.
+ 
+#### Decision Tree:
+This is the recursive, top-down, greedy algorithm used for classification. Decision tree works by classifying the features into two or more branches based on the features. Entropy and Gini index are used as the metric in decision trees. 
+
+
+### Summary of Results.
+    
+            
+Looking at the result of Logistic regression, we got accuracy of about 84% and sensitivity was about 0.94, specificity was 0.4733 which are the preety good metrices. Also, for KNN classification,accuracy is 0.8196 and sensitivity is 0.91, specificity is 0.51. The metrices for logistic regression and KNN was kind of similar. For the KNN I have taken the value of K as 3. The accuracy and other metrices of KNN can be changed by changing the value of K. Usually, it is okay to take square root of no. of obseration but, since I have a lot of data set I have used k as 3 but can be changed and see how it will affect the metrices.The accuracy of Decision tree is 84 % and sensitivity and specificity are 0.96 and 0.34 respectively. The metrics of Decision tree is almost similar to the other two. The accuracy and other metrics of decision tree can be changed by using the concept of tree pruning.    
+     
