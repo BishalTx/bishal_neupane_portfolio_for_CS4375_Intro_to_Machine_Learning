@@ -26,3 +26,5 @@ Code for Classification using Logistic Regression, KNN and Decision tree can be 
 Regression using Linear Regression,KNN and Decision Tree can be found [here](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/commit/14f86d1f25a81cf9746439ded79620ccb1428a31)
 
 Clustering pdf can be found [here](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Clustering.pdf)
+
+Dimensional reduction pdf can be found [here](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Dimensionality.pdf)
