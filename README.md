@@ -38,4 +38,6 @@ The code of SVM Classification can be found here. [code](https://github.com/Bish
 
 The pdf of SVM Classification can be found here. [pdf](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Updated-SVM-and-kernel.pdf)
 
-PDF of SVM Regression can be found here. [pdf] (https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Kernel.pdf)
+PDF of SVM Regression can be found here. [pdf](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Kernel.pdf)
+
+Narrative Document of Kernel and Ensemble Method can be found here. [Narrative Document](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Narrative%20Document%20of%20Kernel%20and%20Ensemble%20Methods.pdf)
