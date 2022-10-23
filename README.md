@@ -36,4 +36,4 @@ The pdf of Ensemble techniques can be found here.[Pdf](https://github.com/Bishal
 
 The code of SVM Classification can be found here. [code](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Updated%20SVM%20and%20kernel.Rmd)
 
-The pdf of SVM Classification can be found here. [code](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Updated-SVM-and-kernel.pdf)
+The pdf of SVM Classification can be found here. [pdf](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Updated-SVM-and-kernel.pdf)
