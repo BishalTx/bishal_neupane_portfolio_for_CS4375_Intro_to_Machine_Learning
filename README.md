@@ -28,3 +28,7 @@ Regression using Linear Regression,KNN and Decision Tree can be found [here](htt
 Clustering pdf can be found [here](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Clustering.pdf)
 
 Dimensional reduction pdf can be found [here](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Dimensionality.pdf)
+
+## SVM and Ensemble Techniques:
+The code for Ensemble techniques can be found here. [Code](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Updated-Ensemble-Technique.Rmd) 
+The pdf of Ensemble techniques can be found here.[Pdf](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/commit/9d3cb36775e6eefb14bf1b507d9f2418a2b19bea) 
