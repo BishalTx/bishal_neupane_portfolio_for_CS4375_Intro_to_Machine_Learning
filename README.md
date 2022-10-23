@@ -31,4 +31,9 @@ Dimensional reduction pdf can be found [here](https://github.com/BishalTx/bishal
 
 ## SVM and Ensemble Techniques:
 The code for Ensemble techniques can be found here. [Code](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Updated-Ensemble-Technique.Rmd) 
+
 The pdf of Ensemble techniques can be found here.[Pdf](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/commit/9d3cb36775e6eefb14bf1b507d9f2418a2b19bea) 
+
+The code of SVM Classification can be found here. [code](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Updated%20SVM%20and%20kernel.Rmd)
+
+The pdf of SVM Classification can be found here. [code](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Updated-SVM-and-kernel.pdf)
