@@ -1,0 +1,325 @@
+---
+title: "SVM"
+author: "Bishal Neupane, Saugat Gyawali"
+date: "10/08/2022"
+output: pdf_document
+---
+
+
+### Source: 
+ https://www.kaggle.com/code/abhpasha/logistic-regression-predicting-rain-in-australia
+
+### Importing data and taking only first 15k because the data is two large more than 100k
+```{r}
+df <- read.csv("weatherAUS.csv", header = TRUE)
+df <- df[1: 15000,]
+
+```
+```{r}
+head(df)
+```
+#There are alot of column so removing columns with non numeric values.
+```{r}
+df$Date<- NULL
+df$WindGustDir<-NULL
+df$WindGustDir <-NULL
+df$WindDir3pm <- NULL
+df$WindDir3pm <-NULL
+df$Location <-NULL
+df$Sunshine <-NULL
+df$RainToday <- NULL
+df$WindDir9am <-NULL
+df$Evaporation <-NULL 
+```
+
+### Structure of Data Frame
+
+```{r}
+str(df)
+```
+
+## Data Exploration
+
+### Names of Column
+```{r}
+names(df)
+
+```
+### Importing Package and  using it to Change to factor
+```{r}
+#install.packages("dplyr")
+library(dplyr)
+df <- mutate_if(df, is.character, as.factor)
+
+```
+
+### Dimensions of df
+```{r}
+dim(df)
+```
+
+
+```{r}
+str(df)
+```
+
+
+### Statistics Summary of Each column
+```{r}
+summary(df)
+```
+
+### Exploring Missing values
+```{r}
+sum(is.na(df))
+```
+### Removing the row with target value NA
+```{r}
+df <- subset(df,RainTomorrow  != "NA")
+
+```
+
+
+
+
+
+### Dimension after removing rows with NA as Rain Tomorrow
+```{r}
+dim(df)
+```
+
+
+
+```{r}
+str(df)
+```
+
+
+
+### Replacing NA's with mean of a column
+
+```{r}
+
+#install.packages('tidyr')
+for(i in 1:ncol(df)){
+  df[is.na(df[,i]), i] <- mean(df[,i], na.rm = TRUE)
+}
+```
+
+### Summary after replacing NA's with mean
+```{r}
+summary(df)
+```
+
+
+
+
+
+
+
+
+
+## Data Visualization
+```{r}
+par(mfrow=c(1,6))
+plot(df$RainTomorrow, df$MinTemp, data=df, main="MinTemp",
+varwidth=TRUE)
+plot(df$RainTomorrow, df$MaxTemp, data=df, main="MaxTemp", varwidth=TRUE)
+plot(df$RainTomorrow, df$Rainfall, data=df, main="Rainfall", varwidth=TRUE)
+plot(df$RainTomorrow, df$Evaporation, data=df, main="Evaporation", varwidth=TRUE)
+plot(df$RainTomorrow, df$Sunshine, data=df, main="Sunshine", varwidth=TRUE)
+
+plot(df$RainTomorrow, df$WindGustSpeed, data=df, main="windGustSpeed",
+varwidth=TRUE)
+
+
+```
+```{r}
+boxplot(df, col = rainbow(ncol(df)))
+```
+```{r}
+par(mfrow=c(3,5))
+cdplot(df$RainTomorrow~df$Humidity3pm)
+cdplot(df$RainTomorrow~df$WindSpeed3pm)
+cdplot(df$RainTomorrow~df$MinTemp)
+cdplot(df$RainTomorrow~df$MaxTemp)
+cdplot(df$RainTomorrow~df$Rainfall)
+cdplot(df$RainTomorrow~df$WindGustSpeed)
+cdplot(df$RainTomorrow~df$WindSpeed9am)
+cdplot(df$RainTomorrow~df$Humidity9am)
+cdplot(df$RainTomorrow~df$Pressure9am)
+cdplot(df$RainTomorrow~df$Temp3pm)
+cdplot(df$RainTomorrow~df$Temp9am)
+cdplot(df$RainTomorrow~df$Cloud3pm)
+cdplot(df$RainTomorrow~df$Cloud9am)
+
+
+```
+
+##Spliting into train and test set
+
+```{r}
+set.seed(1234)
+i <- sample(1:nrow(df), 0.80*nrow(df), replace=FALSE)
+train <-df[i,]
+test <- df[-i,]
+
+```
+
+
+
+```{r}
+library(e1071)
+trainForSVM <- train
+trainForSVM$RainTomorrow <- NULL
+head(trainForSVM)
+```
+
+## Model Building and Prediction on Test set
+```{r}
+trainForSVMLabels <- train$RainTomorrow
+testForSVM <- test
+testForSVM$RainTomorrow <- NULL
+testLabelForSVM <- test$RainTomorrow
+svm1 <- svm(train$RainTomorrow~., data = train, kernel = "linear", cost = 50, scale = TRUE)
+summary(svm1)
+pred <- predict(svm1,newdata=test)
+table(pred,test$RainTomorrow)
+
+```
+## Confusion Matrix and Statistics of Linear SVM
+```{r}
+library(caret)
+confusionMatrix(as.factor(pred),as.factor(test$RainTomorrow))
+```
+
+## Tuning the value for C
+```{r}
+set.seed(1234)
+i <- sample(1:nrow(train), 0.20*nrow(train), replace=FALSE)
+
+validTune <- train[i,]
+train <- train[-1,]
+validTuneLabels <- validTune$RainTomorrow
+
+
+```
+
+## Getting best C
+```{r}
+par(mfrow=c(1,3))
+tune.out <- tune(svm,RainTomorrow~., data=validTune, kernel="linear",
+ranges=list(cost=c(0.001, 0.01, 0.1, 1, 5, 10, 100)))
+summary(tune.out)
+
+```
+
+## Choosing best model based upon the C value 
+```{r}
+best_model1 <- tune.out$best.model
+summary(best_model1)
+
+```
+
+## Model Building and predicting with Best model
+```{r}
+pred <- predict(best_model1,newdata=test)
+```
+
+## Confusion Matrix of best C
+```{r}
+library(caret)
+confusionMatrix(as.factor(pred),as.factor(test$RainTomorrow))
+```
+## Model Building and prediction of SVM polynomial with cost =1 and gamma =1
+```{r}
+svm2 <- svm(train$RainTomorrow~., data = train, kernel = "polynomial", cost = 1,gamma = 1, scale = TRUE)
+summary(svm2)
+pred <- predict(svm2,newdata=test)
+table(pred,test$RainTomorrow)
+```
+## Confusion Matrix of SVM kernal = Polynomial
+```{r}
+library(caret)
+confusionMatrix(as.factor(pred),as.factor(test$RainTomorrow))
+```
+
+## Tuning svm polynomial 
+
+```{r}
+
+set.seed(1234)
+tune.out <- tune(svm,RainTomorrow~.,data = validTune[1:200,], kernel="polynomial",scale=TRUE,
+ranges=list(cost=c(0.001, 0.01, 0.1, 1, 5, 10),gamma=c(0.5,1,2,3)))
+summary(tune.out)
+
+```
+## Getting Best model
+```{r}
+best_model2 <- tune.out$best.model
+summary(best_model2)
+
+```
+
+## Prediction for best value of C and gamma
+```{r}
+pred <- predict(best_model2,newdata=test)
+table(pred,test$RainTomorrow)
+```
+## Confusion matrix and Statistics of best model svm(Kenrnel = polynomial)
+```{r}
+library(caret)
+confusionMatrix(as.factor(pred),as.factor(test$RainTomorrow))
+```
+## Model Building and prediction for SVM Kernel = radial
+```{r}
+svm3 <- svm(train$RainTomorrow~., data = train, kernel = "radial",scale= TRUE, cost = 1,gamma = 1)
+summary(svm3)
+pred <- predict(svm3,newdata=test)
+table(pred,test$RainTomorrow)
+```
+## Confusion Matrix and Statistics of SVM kernal = radial and C = 1 and Gamma = 1
+```{r}
+library(caret)
+confusionMatrix(as.factor(pred),as.factor(test$RainTomorrow))
+```
+## Tuning SVM with Kernel = radial
+```{r}
+set.seed(1234)
+tune.out <- tune(svm,RainTomorrow~., data=validTune,scale= TRUE, kernel="radial",
+ranges=list(cost=c(0.001, 0.01, 0.1, 1, 5, 10, 100),gamma=c(0.5,1,2,3,4)))
+summary(tune.out)
+```
+
+```{r}
+best_model3 <- tune.out$best.model
+summary(best_model3)
+
+```
+
+# Model Building and Prediction Best value of C and gamma for SVM with kernel = "radial"
+```{r}
+
+pred <- predict(best_model3,newdata=test)
+table(pred,test$RainTomorrow)
+
+```
+
+## Confusion Matrix and Statistics of Best model of SVM whose kernel = radial
+```{r}
+library(caret)
+confusionMatrix(as.factor(pred),as.factor(test$RainTomorrow))
+```
+## Result Analysis:
+This notebook has the experiment done on the weather dataset from Kaggle. The main point of this notebook is to predict whether it will rain or not tomorrow. I have used SVM classification with different kernel types along with various parameters and hyperparameters. Also, tuning of hyperperimenter is done to get the best model and the values of those hyperparameters which gives the model.
+
+### SVM with kernel linear, cost = 50 and scale = True
+I was able to get accuracy of about 87 percent.The model had 3664 support vector classfier before tuning but after doing crossvalidation and using the best model, it was reduced to 739. 
+
+### SVM with kernel polynomial cost =1 , gamma = 1 and Scale = TRUE
+Without tunning I was able to get the accuracy of about 86 percent.Before tuning the number of support vectors was 3164 and later after tuning it was changed to 88.
+
+### SVM with kernel radial cost = 1, gamma = 1, scale = True
+Without tuning the accuracy was 82 percent. Before tuning the number of Support vector was 8831 and later changed to 1618 after tuning. 
+
+It is clear from the above statistics that the accuracy was higher when the kernel was linear which means that the distance from both classes to the hyperplane was maximum in linear kernel. The run time for linear was less than for polynomial. It was taking a lot of time so I have used less data for tuning. This might be because it have to transform data to other planes. So, Linear kernel outperform for my dataset.
