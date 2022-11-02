@@ -44,6 +44,6 @@ Narrative Document of Kernel and Ensemble Method can be found here. [Narrative D
 
 ## ML using SkLearn
 
-PDF of ML using SkLearn can be found here.[ML using Sklearn PDF] (https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/ML%20using%20Sklearn.pdf)
+PDF of ML using SkLearn can be found here.[ML using Sklearn PDF](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/ML%20using%20Sklearn.pdf)
 
-Code for ML using Sklearn can be found here.[ML using Sklearn Code] (https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/ML%20using%20SkLearn.ipynb) 
+Code for ML using Sklearn can be found here.[ML using Sklearn Code](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/ML%20using%20SkLearn.ipynb) 
