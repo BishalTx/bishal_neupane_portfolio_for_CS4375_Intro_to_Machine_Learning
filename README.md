@@ -41,3 +41,9 @@ The pdf of SVM Classification can be found here. [pdf](https://github.com/Bishal
 PDF of SVM Regression can be found here. [pdf](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Kernel.pdf)
 
 Narrative Document of Kernel and Ensemble Method can be found here. [Narrative Document](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Narrative%20Document%20of%20Kernel%20and%20Ensemble%20Methods.pdf)
+
+## ML using SkLearn
+
+PDF of ML using SkLearn can be found here.[ML using Sklearn PDF] (https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/ML%20using%20Sklearn.pdf)
+
+Code for ML using Sklearn can be found here.[ML using Sklearn Code] (https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/ML%20using%20SkLearn.ipynb) 
