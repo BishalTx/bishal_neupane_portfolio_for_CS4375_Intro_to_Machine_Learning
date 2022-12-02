@@ -1,4 +1,4 @@
-# bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning
+# Bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning
 This is the Portfolio setup Assignment.
 The description of this assignment can be found here [Portfolio Assignment Guidlines.pdf](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Portfolio%20Assignment%20Guidlines.pdf) and answer can be found here [Overview of Machine Learning.pdf](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Overview%20of%20Machine%20Learning.pdf)
 
@@ -47,3 +47,7 @@ Narrative Document of Kernel and Ensemble Method can be found here. [Narrative D
 PDF of ML using SkLearn can be found here.[ML using Sklearn PDF](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/ML%20using%20Sklearn.pdf)
 
 Code for ML using Sklearn can be found here.[ML using Sklearn Code](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/ML%20using%20SkLearn.ipynb) 
+
+code for Image Classification using CNN and transfer learning can be found here.[Image Classification](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Untitled.ipynb)
+
+Pdf for Image Classification can be found here. Pdf [Image Classification] (https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Image%20Classification.pdf)https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Image%20Classification.pdf)
