@@ -50,4 +50,4 @@ Code for ML using Sklearn can be found here.[ML using Sklearn Code](https://gith
 
 code for Image Classification using CNN and transfer learning can be found here.[Image Classification](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Untitled.ipynb)
 
-Pdf for Image Classification can be found here. Pdf [Image Classification] (https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Image%20Classification.pdf)https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Image%20Classification.pdf)
+Pdf for Image Classification can be found here. Pdf [Image Classification](https://github.com/BishalTx/bishal_neupane_portfolio_for_CS4375_Intro_to_Machine_Learning/blob/main/Image%20Classification.pdf)
